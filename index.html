@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>china history</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_3352173_n3ud4x0bnhf.css">
+  <style>
+  * {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  }
+
+  .lrcText {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    bottom: 20px;
+    font-size: 22px;
+    color: #00a8f2;
+    z-index: 1;
+  }
+
+  .musicDisc {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .musicDisc .item {
+    position: absolute;
+    opacity: 0;
+    top: 32px;
+    right: 16px;
+  }
+
+  .musicDisc i {
+    color: #666;
+    font-size: 10px;
+    position: absolute;
+  }
+
+  .musicDisc i.yf1 {
+    animation: note-animation-y 3s cubic-bezier(.37, .16, .63, 1) 0s infinite;
+  }
+
+  .musicDisc i.yf2 {
+    animation: note-animation-y 3s cubic-bezier(.37, .16, .63, 1) 1.3s infinite;
+  }
+
+  .musicDisc .item1 {
+    animation: note-animation-x 3s ease-in-out 0s infinite, note-animation-opacity 3s linear 0s infinite;
+  }
+
+  .musicDisc .item2 {
+    animation: note-animation-x 3s ease-in-out 1.3s infinite, note-animation-opacity 3s linear 1.3s infinite;
+  }
+
+  @keyframes note-animation-x {
+    0% {
+      transform: scale(.8) rotate(10deg) translate3d(-0.5rem, 0, 0);
+    }
+    55.6% {
+      transform: scale(1.3) rotate(10deg) translate3d(0.5rem, 0, 0);
+    }
+    100% {
+      transform: scale(1.3) translate3d(-0.5rem, 0, 0);
+    }
+  }
+
+  @keyframes note-animation-y {
+    0% {
+      transform: translateZ(0);
+    }
+    100% {
+      transform: translate3d(0, 1.2rem, 0);
+    }
+  }
+
+  @keyframes note-animation-opacity {
+    10% {
+      opacity: 0;
+    }
+
+    85.3% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .nextprev {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .nextprev i {
+    font-size: 8px;
+    color: #ccc;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  .nextprev i:first-child {
+    margin-left: 14px;
+  }
+
+  .nextprev i.cur {
+    color: #00a8f2;
+  }
+
+  .musicList {
+    position: fixed;
+    top: 47px;
+    right: 15px;
+    width: 186px;
+    height: 132px;
+    z-index: 1;
+    font-size: 12px;
+    background: #333;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .musicList ul {
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    overflow-y: auto;
+  }
+
+  .musicList ul::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .musicList ul::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .musicList ul::-webkit-scrollbar-track {
+    background: #444;
+  }
+
+  .musicList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 24px;
+    cursor: pointer;
+    padding: 0 5px;
+    border-radius: 12px;
+  }
+
+  .musicList li.cur {
+    background: #444;
+    color: #00a8f2;
+  }
+
+  .musicList li .time {
+    width: 32px;
+    flex-shrink: 0;
+    color: #999;
+  }
+
+  .musicList li .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
+  .musicTool {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: #222;
+    transition: all .2s;
+    overflow: hidden;
+  }
+
+  .progress {
+    position: absolute;
+    height: 100%;
+    background: #00a8f2;
+    left: 0;
+    z-index: -1;
+    top: 0;
+  }
+
+  .musicTool .name {
+    font-size: 12px;
+    line-height: 12px;
+    color: #999;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+  }
+
+  .musicTool i.mp {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ccc;
+    animation: rotate 6s infinite linear;
+    margin-right: 4px;
+  }
+
+  .musicTool i.play {
+    color: #00a8f2;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+
+  .h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+  }
+
+  body, #app {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /*background: radial-gradient(#fff 10%, #d0d0d0);*/
+  }
+
+  body {
+    background: url("data:image/webp;base64,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");
+    background-size: cover;
+  }
+
+  #app {
+    position: relative;
+  }
+
+  .author {
+    opacity: .02;
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    white-space: nowrap;
+    transform: translate(-0%, -50%);
+    font-size: 60vw;
+    animation: move 180s infinite linear;
+  }
+
+  @keyframes move {
+    0% {
+      transform: translate(-0%, -50%);
+    }
+    50% {
+      transform: translate(-50%, -50%);
+    }
+    100% {
+      transform: translate(-0%, -50%);
+    }
+
+  }
+
+
+  .history {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    user-select: none;
+  }
+
+  .history .line {
+    position: absolute;
+    height: 2px;
+    background: #ddd;
+    width: 100%;
+    left: 0;
+    top: 50%;
+  }
+
+  .history ul {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: calc(50vh - 47px);
+  }
+
+  /*.history li:first-child {*/
+  /*  margin-left: 84px;*/
+  /*}*/
+
+  /*.history li:last-child {*/
+  /*  margin-right: 84px;*/
+  /*}*/
+
+  .history li {
+    width: 62px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+    transition: all .4s;
+    z-index: 1;
+    /*pointer-events: none;*/
+    height: fit-content;
+  }
+
+  .history li:hover {
+
+    transform: scale(1.1);
+    z-index: 2;
+  }
+
+
+  .history li:hover .ms {
+    display: block;
+  }
+
+  .history li .time {
+    font-size: 12px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+
+  .history li .dot {
+    position: relative;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  .history li i {
+    position: relative;
+    z-index: 2;
+  }
+
+
+  .history li.lv1 .name {
+    font-size: 34px;
+    width: 34px;
+    line-height: 34px;
+    color: #00a8f2;
+  }
+
+  .history li.lv1 .dot, .history li.lv1 .time, .history li.lv2 .dot, .history li.lv2 .time, .history li.lv3 .dot, .history li.lv3 .time {
+    color: #00a8f2;
+  }
+
+  .history li.lv1 .dot span, .history li.lv2 .dot span, .history li.lv3 .dot span {
+    background: #00a8f2;
+  }
+
+  .history li.lv1 .dot span {
+    width: 3px;
+    margin-left: -1px;
+  }
+
+  .history li.lv2 .dot span {
+    width: 2px;
+    margin-left: -1px;
+  }
+
+  .history li.lv2 .name {
+    font-size: 20px;
+    width: 20px;
+    line-height: 20px;
+    color: #00a8f2;
+  }
+
+  .history li.lv3 .name {
+    font-size: 16px;
+    width: 16px;
+    line-height: 16px;
+    color: #00a8f2;
+  }
+
+  .history li.lv1 .dot {
+    padding-top: 100px;
+  }
+
+  .history li.lv2 .dot {
+    padding-top: 76px;
+  }
+
+  .history li.lv3 .dot {
+    padding-top: 42px;
+  }
+
+  .history li.lv1 .dot i {
+    font-size: 24px;
+  }
+
+  .history li.lv2 .dot i {
+    font-size: 18px;
+  }
+
+  .history li.lv3 .dot i {
+    font-size: 12px;
+  }
+
+
+  .history li.his {
+    font-size: 12px;
+    pointer-events: inherit;
+  }
+
+  .history li.his .name {
+    width: 20px;
+    padding: 3px;
+    border: solid 1px #ccc;
+    background: #fff;
+  }
+
+
+  .history li.his .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    border: solid 1px #ccc;
+    background: #fff;
+    margin: 12px 0 8px;
+    transition: all .4s;
+  }
+
+  .history li.his.hot .name {
+    border-color: #60c1ff;
+    background: #60c1ff;
+    color: #fff;
+  }
+
+  .history li.his .dot span {
+    bottom: 8px;
+    display: none;
+  }
+
+  .history li.hot {
+    color: #60c1ff;
+    z-index: 2;
+  }
+
+  .history li.hot .dot {
+    background: #60c1ff;
+    border-color: #60c1ff;
+  }
+
+
+  .history li .dot span {
+    width: 1px;
+    height: 100%;
+    background: #ccc;
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+  }
+
+  .history li .ms {
+    font-size: 12px;
+    color: #888;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+    border-radius: 12px;
+    bottom: 65px;
+    padding: 15px;
+    z-index: 2;
+    width: 210px;
+    color: #444;
+    display: none;
+    line-height: 20px;
+  }
+
+  .history li .ms i {
+    font-style: normal;
+    color: #999;
+  }
+
+  .history li .ms:before {
+    position: absolute;
+    content: '';
+    border-width: 8px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    bottom: -15px;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .2));
+    left: 50%;
+    margin-left: -8px;
+  }
+
+  .win {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .win .mark {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background: rgba(0, 0, 0, .6);
+  }
+
+  .win .kuang {
+    width: 720px;
+    background: #fff;
+    box-shadow: 0 0 13px rgba(0, 0, 0, .2);
+    position: relative;
+    z-index: 2;
+    border-radius: 15px;
+  }
+
+  .win .kuang .ms {
+    padding: 25px;
+    line-height: 24px;
+    color: #555;
+    max-height: 550px;
+    overflow-y: auto;
+  }
+
+  .win .kuang .ms .jc {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: #f8f8f8;
+    margin-bottom: 15px;
+  }
+
+  .win .kuang .ms .jc li {
+    width: 50%;
+    line-height: 34px;
+  }
+
+  .win .kuang .ms .jc li i {
+    color: #aaa;
+    font-style: normal;
+  }
+
+  .win .kuang .ms p {
+    margin-bottom: 15px;
+  }
+
+  .win .kuang .ms p a, .win .kuang .ms b, .win .kuang .ms strong {
+    color: #60c1ff;
+    text-decoration: none;
+  }
+
+  .win .kuang .title {
+    font-size: 34px;
+    text-align: center;
+    padding: 20px 0 20px;
+    border-bottom: solid 1px #ddd;
+    position: relative;
+  }
+
+  .win .kuang .title i {
+    cursor: pointer;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    right: -20px;
+    background: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -20px;
+  }
+
+  .st-enter-active, .st-leave-active {
+    transition: all .6s;
+  }
+
+  .st-enter, .st-leave-to {
+    opacity: 0;
+  }
+
+  .st-enter-to, .st-leave {
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    .win .kuang {
+      width: 90%;
+    }
+  }
+
+  input[type=color] {
+    position: absolute;
+    left: 10px;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+  }
+
+
+  </style>
+</head>
+
+<body>
+<div id="app">
+  <div class="lrcText" v-if="isGeci" :style="{color:geciColor}">
+    <input type="color" @change="getColor">
+    {{curText}}
+  </div>
+  <div class="musicList" v-if="isList">
+    <ul>
+      <li v-for="(item,inx) in musicList" :class="{cur:inx==xh}" @click="play(inx)">
+        <div class="name">{{inx+1}}:{{item.songName}}-{{item.songAuto}}</div>
+        <div class="time">{{formatTime(item.duration)}}</div>
+      </li>
+    </ul>
+  </div>
+  <div class="musicDisc" v-if="isPlay">
+    <div class="item item1">
+      <i class="iconfont icon-yinfu yf1"></i>
+    </div>
+    <div class="item item2">
+      <i class="iconfont icon-yinle1 yf2"></i>
+    </div>
+  </div>
+  <div class="musicTool" :style="musicStyle" @click="gotoWhere">
+    <div class="progress" :style="progressStyle" v-if="isPlay"></div>
+    <div class="nextprev" v-if="isPlay">
+      <i class="iconfont icon-ziyuan1" @click.stop="prev"></i>
+      <i class="iconfont icon-geciweidianji" @click.stop="isGeci=!isGeci" :class="{cur:isGeci}"></i>
+      <i class="iconfont icon-yijicaidan" @click.stop="isList=!isList" :class="{cur:isList}"></i>
+      <i class="iconfont icon-ziyuan" @click.stop="next"></i>
+    </div>
+    <div class="name" v-if="isPlay">{{musicList[xh].songName}}-{{musicList[xh].songAuto}}</div>
+    <i class="iconfont icon-yinle mp" :class="{play:isPlay}" :style="playStyle" @click.stop="play(xh)"></i>
+  </div>
+  <div class="author">china history</div>
+  <transition name="st">
+    <div class="win" v-if="show">
+      <div class="mark"></div>
+      <div class="kuang">
+        <div class="title">{{nr.title}}<i class="icon-close iconfont" @mousedown.stop="show=false"
+                                          @touchstart.stop="show=false"></i></div>
+        <div class="ms" v-html="nr.ms"></div>
+      </div>
+    </div>
+  </transition>
+  <div class="history" :style="widthStyle" @mousedown="mousedown" @mousemove="mousemove" @mouseup="mouseup"
+       @mouseleave="mouseleave" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
+    <div class="line"></div>
+    <ul ref="ul">
+      <li></li>
+      <li v-for="item in history"
+          :class="{lv1:item.level===1,lv2:item.level===2,lv3:item.level===3,his:item.level==='history',hot:item.tj}"
+          @click="tan(item)">
+        <div class="name" v-if="item.name">{{item.name}}</div>
+        <div class="dot" v-if="item.level==='history'"><span></span></div>
+        <div class="dot" v-else><i class="iconfont icon-dingwei"></i><span></span></div>
+        <div class="time" v-html="item.time"></div>
+      </li>
+      <li></li>
+    </ul>
+  </div>
+</div>
+<script src="https://music.leeao8.cn/musicList_BF.js" type="text/javascript"></script>
+<script src="player.js" type="text/javascript"></script>
+<script src="history.js" type="text/javascript"></script>
+<script src="vue.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+new Vue({
+    el: '#app',
+    data: {
+        history: history,
+        scrollX: localStorage.getItem('scrollX') ? parseInt(localStorage.getItem('scrollX')) : 0,//拖动移动的距离
+        saveX: localStorage.getItem('scrollX') ? parseInt(localStorage.getItem('scrollX')) : 0,//拖动后保存位置,很重要必须
+        isDown: false,
+        isClick: false,//这个是为了解决是点击还是mouseup冲突问题
+        oldX: 0,
+        sw: window.innerWidth,
+        scrollW: 0,
+        maxX: 0,
+        moveX: 0,//移动端touchup没有event.targetTouches了，所以要用这个来存，为了统一，PC端也借助这个
+        show: false,
+        curContent: '',
+        duration: 0,
+        musicList: data.list,
+        player: new QMplayer(),
+        isPlay: false,
+        isGeci: false,
+        isList: false,
+        xh: 0,//播放音乐序号
+        curTime: 0, //播放當前時間
+        lrcText: [],//当前歌曲对应的歌词
+        geciColor: '#000'
+
+    },
+    mounted() {
+        window.addEventListener("resize", () => {
+            this.sw = window.innerWidth
+        })
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'Escape') {
+                this.show = false
+            }
+        })
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowLeft') {
+                this.scrollX += 15
+                if (this.scrollX > 0) {
+                    this.scrollX = 0
+                }
+
+                this.saveX = this.scrollX
+                localStorage.setItem('scrollX', this.scrollX)
+
+            }
+            if (e.code === 'ArrowRight') {
+                this.scrollX -= 15
+                if (this.scrollX < this.maxX) {
+                    this.scrollX = this.maxX
+                }
+                this.saveX = this.scrollX
+                localStorage.setItem('scrollX', this.scrollX)
+
+            }
+        })
+        //音乐部分开始
+        // 监听事件
+        this.player.on("play", () => {
+            this.xh = this.player.data.index//赋值当前歌曲的XH
+            this.isPlay = true
+        })
+        this.player.on("pause", () => {
+            this.isPlay = false
+        })
+        this.player.on("ended", () => {
+            if (this.xh == this.musicList.length - 1) {
+                this.next()
+            }
+        })
+        this.player.on("timeupdate", () => {
+            this.curTime = this.player.currentTime
+        })
+
+    },
+    computed: {
+        progressStyle() {
+            if (this.player.duration) {
+                let currentTime = this.player.currentTime
+                let duration = this.player.duration
+                return 'width:' + (currentTime / duration) * 100 + '%'
+            } else {
+                return 'width:0%'
+            }
+
+        },
+        widthStyle() {
+            return 'width:' + this.scrollW + 'px;transform:translateX(' + this.scrollX + 'px);transition-duration:' + this.duration + 'ms'
+        },
+        playStyle() {
+            let aa = ''
+            if (this.isPlay) {
+                aa = 'animation-play-state:running'
+            } else {
+                aa = 'animation-play-state:paused'
+            }
+            return aa
+        },
+        musicStyle() {
+            let aa = ''
+            if (this.isPlay) {
+                aa = 'width:186px'
+            } else {
+                aa = ''
+            }
+            return aa
+        },
+        curText() {
+            if (this.lrcText) {
+                let fi = this.lrcText.filter((el) => {
+                    return el.cur
+                })
+                if (fi.length > 0) {
+                    return fi[0].text
+                }
+
+            }
+        }
+    },
+    watch: {
+        isPlay: {
+            immediate: true,
+            handler(value) {
+                if (value) {
+                    this.progress()
+                } else {
+                    this.isList = false
+                }
+            }
+        },
+        xh: {
+            immediate: true,
+            handler(value) {
+                this.lrcText = []
+                //获取当前歌曲对应歌词
+                fetch('lrc/' + this.musicList[value].lrc)
+                    .then((response) => {
+                        return response.text();
+                    })
+                    .then((myJson) => {
+                        let line = myJson.split('\n');
+                        line.forEach((el, xh) => {
+                            let rs = el.split(']');
+                            if (rs[1] == undefined) {
+                                rs[1] = "";
+                            }
+                            this.lrcText.push({xh: xh + 1, btime: rs[0] + ']', text: rs[1]});
+                        })
+                    });
+            }
+        },
+        sw: {
+            immediate: true,
+            handler(value) {
+                setTimeout(() => {
+                    this.scrollW = this.$refs.ul.scrollWidth
+                    this.maxX = (this.scrollW - value) * -1
+                    if (this.scrollX < this.maxX) {
+                        this.scrollX = this.maxX
+                        this.saveX = this.scrollX
+                    }
+                }, 1)
+            }
+        },
+        isDown: {
+            immediate: true,
+            handler(value) {
+                if (value) {
+                    this.duration = 0
+                } else {
+                    this.duration = 400
+                }
+
+            }
+        },
+    },
+    methods: {
+        formatTime(value) {
+            let fen = Math.floor(value / 60)
+            let yu = Math.floor(value % 60)
+            if (fen < 10) {
+                fen = '0' + fen
+            } else {
+                fen = fen
+            }
+            if (yu < 10) {
+                yu = '0' + yu
+            } else {
+                yu = yu
+            }
+            return fen + ':' + yu
+        },
+        gotoWhere() {
+            if (this.isPlay) {
+                let pos = event.pageX - event.currentTarget.offsetLeft
+                let allW = event.currentTarget.scrollWidth
+                this.player.currentTime = (pos / allW) * this.player.duration
+
+            }
+
+        },
+        getColor() {
+            this.geciColor = event.target.value
+        },
+        toSec(el) {//[00:12.52]类型时间转为秒函数
+            let min = Number(el.btime.substr(1, 2));
+            let sec = Number(el.btime.substring(4, el.btime.length - 1));
+            let lastSec = min * 60 + sec;
+            return lastSec
+        },
+        progress() {
+            this.setinter = setInterval(() => {
+                //歌词处理
+                this.lrcText.forEach((el) => {
+                    this.$set(el, 'cur', false)
+                })
+                let fi = this.lrcText.filter((el) => {
+                    let lastSec = this.toSec(el);
+                    let diff = this.curTime;
+                    return diff - lastSec >= 0
+                })
+                if (fi[fi.length - 1]) {
+                    this.$set(fi[fi.length - 1], 'cur', true)
+                }
+            }, 1)
+
+        },
+        play(index) {
+            let musicList = []
+            this.musicList.forEach((el) => {
+                musicList.push(el.songUrl)
+            })
+            this.player.play(musicList, {index: index})
+        },
+        prev() {
+            this.player.playPrev();
+        },
+        next() {
+            this.player.playNext();
+        },
+        tan(item) {
+            if (this.isClick) {
+                if (item.level != 'history') {
+                    this.scrollX = (event.currentTarget.offsetLeft - this.sw * 0.5) * -1
+                    if (this.scrollX < this.maxX) {
+                        this.scrollX = this.maxX
+                    }
+                    if (this.scrollX > 0) {
+                        this.scrollX = 0
+                    }
+                    this.saveX = this.scrollX
+                    localStorage.setItem('scrollX', this.scrollX)
+                } else {
+                    this.show = true
+                    this.nr = item
+                }
+            }
+        },
+        huitan() {
+            this.isDown = false
+            if (this.scrollX > 0) {
+                this.scrollX = 0
+            }
+            if (this.scrollX < this.maxX) {
+                this.scrollX = this.maxX
+            }
+            this.saveX = this.scrollX
+            localStorage.setItem('scrollX', this.scrollX)
+
+        },
+        mousedown() {
+            this.isDown = true
+            this.oldX = event.pageX
+        },
+        mousemove() {
+            if (this.isDown) {
+                let newX = event.pageX
+                this.moveX = newX - this.oldX
+                let dis = this.saveX + this.moveX
+                if (dis > 0) {
+                    dis = (this.saveX + this.moveX) * 0.2
+                }
+
+                if (dis < this.maxX) {
+                    //dis= this.saveX + this.moveX+(maxX-(this.saveX + this.moveX))*0.8
+                    dis = (this.saveX + this.moveX) * 0.2 + 0.8 * this.maxX
+                }
+                this.scrollX = dis
+            }
+
+        },
+        mouseup() {
+            if (Math.abs(event.pageX - this.oldX) > 0) {
+                this.isClick = false
+            } else {
+                this.isClick = true
+            }
+            this.huitan()
+        },
+        mouseleave() {
+            this.huitan()
+        },
+        touchstart() {
+            this.isDown = true
+            this.oldX = event.targetTouches[0].pageX
+        },
+        touchmove() {
+            if (this.isDown) {
+                let newX = event.targetTouches[0].pageX
+                this.moveX = newX - this.oldX
+                let dis = this.saveX + this.moveX
+                if (dis > 0) {
+                    dis = (this.saveX + this.moveX) * 0.2
+                }
+
+                if (dis < this.maxX) {
+                    dis = (this.saveX + this.moveX) * 0.2 + 0.8 * this.maxX
+                }
+
+                this.scrollX = dis
+            }
+        },
+        touchend() {
+            if (Math.abs(this.moveX) > 0) {
+                this.isClick = false
+            } else {
+                this.isClick = true
+            }
+            this.huitan()
+        },
+    }
+})
+</script>
+</body>
+</html>
